@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'screens/order_list_screen.dart';
+import 'screens/home_page.dart';
 
 void main() {
   runApp(MaterialApp(
-    title: 'Sipariş Onay',
+    title: 'Sipariş Takip',
     theme: ThemeData(primarySwatch: Colors.indigo),
-    home: OrderListScreen(),
+    debugShowCheckedModeBanner: false,
+    home: const HomePage(),
   ));
 }

@@ -1,46 +1,72 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import '../models/order.dart';
+import '../services/order_repository.dart';
 
 class OrderDetailScreen extends StatelessWidget {
   final Order order;
 
-  OrderDetailScreen({required this.order});
+  const OrderDetailScreen({Key? key, required this.order}) : super(key: key);
 
   void _approveOrder(BuildContext context) {
-    // Buraya API çağrısı yazılabilir
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Sipariş onaylandı')));
+    OrderRepository.approveOrder(order);
     Navigator.pop(context);
-  }
-
-  void _rejectOrder(BuildContext context) {
-    // Buraya API çağrısı yazılabilir
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Sipariş reddedildi')));
-    Navigator.pop(context);
+    showCupertinoDialog(
+      context: context,
+      builder: (context) => CupertinoAlertDialog(
+        title: const Text('Başarılı'),
+        content: const Text('Sipariş onaylandı.'),
+        actions: [
+          CupertinoDialogAction(
+            child: const Text('Tamam'),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Sipariş Detayı')),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            Text('Sipariş No: ${order.id}', style: TextStyle(fontSize: 18)),
-            Text('Müşteri: ${order.customer}'),
-            Text('Tutar: ${order.totalAmount} TL'),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () => _approveOrder(context),
-              child: Text('Onayla'),
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
+    return CupertinoPageScaffold(
+      navigationBar: const CupertinoNavigationBar(
+        middle: Text('Sipariş Detayı'),
+        previousPageTitle: 'Geri',
+      ),
+      child: SafeArea(
+        child: Center(
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+            constraints: const BoxConstraints(maxWidth: 400),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildReadonlyCupertinoField('Müşteri', order.customer),
+                const SizedBox(height: 16),
+                _buildReadonlyCupertinoField('Sipariş No', order.id),
+                const SizedBox(height: 16),
+                _buildReadonlyCupertinoField('Toplam Tutar', '${order.totalAmount} ₺'),
+                const SizedBox(height: 40),
+                CupertinoButton.filled(
+                  onPressed: () => _approveOrder(context),
+                  child: const Text('Onayla'),
+                ),
+              ],
             ),
-            ElevatedButton(
-              onPressed: () => _rejectOrder(context),
-              child: Text('Reddet'),
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-            ),
-          ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildReadonlyCupertinoField(String placeholder, String value) {
+    return CupertinoTextField(
+      readOnly: true,
+      controller: TextEditingController(text: value),
+      placeholder: placeholder,
+      decoration: const BoxDecoration(
+        border: Border(
+          bottom: BorderSide(color: CupertinoColors.separator),
         ),
       ),
     );
