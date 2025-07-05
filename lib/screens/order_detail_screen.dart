@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import '../models/order.dart';
 import '../services/order_repository.dart';
 
@@ -47,10 +48,20 @@ class OrderDetailScreen extends StatelessWidget {
                 const SizedBox(height: 16),
                 _buildReadonlyCupertinoField('Toplam Tutar', '${order.totalAmount} ₺'),
                 const SizedBox(height: 40),
-                CupertinoButton.filled(
-                  onPressed: () => _approveOrder(context),
-                  child: const Text('Onayla'),
-                ),
+                Row(
+                  children: [
+                    Expanded(child: CupertinoButton.filled(
+                      onPressed: () => _approveOrder(context),
+                      color: Colors.green,
+                      child: const Text('Onayla'),
+                    ),
+                    ),
+                    const SizedBox(width:16),
+                    Expanded(child: CupertinoButton.filled(
+                      child: const Text('İptal Et'),
+                      onPressed: () => _approveOrder(context),),),
+                  ],
+                )
               ],
             ),
           ),
