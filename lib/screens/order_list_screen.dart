@@ -58,7 +58,7 @@ class _OrderListScreenState extends State<OrderListScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Bekleyen Siparişler"),
-        backgroundColor: Colors.indigo,
+        backgroundColor: Color.fromARGB(0, 30, 29, 131),
       ),
       body: orders.isEmpty
           ? const Center(

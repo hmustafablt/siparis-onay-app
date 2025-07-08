@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'order_list_screen.dart';
 import 'approved_orders_screen.dart';
 import 'profile_screen.dart';
+import 'canceled_orders_screen.dart'; // Yeni ekranı import et
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,9 +15,10 @@ class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
 
   final List<Widget> _pages = [
-    OrderListScreen(),          // Sipariş Listesi (Bekleyenler)
-    ApprovedOrdersScreen(),     // Onaylanan Siparişler
-    ProfileScreen(),            // Profil
+    OrderListScreen(), // Bekleyenler
+    ApprovedOrdersScreen(), // Onaylananlar
+    CanceledOrdersScreen(), // İptal Edilenler
+    ProfileScreen(), // Profil
   ];
 
   @override
@@ -29,19 +31,15 @@ class _HomePageState extends State<HomePage> {
         selectedItemColor: Colors.indigo,
         unselectedItemColor: Colors.grey,
         items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.list), label: 'Siparişler'),
+          BottomNavigationBarItem(icon: Icon(Icons.check), label: 'Onaylılar'),
           BottomNavigationBarItem(
-            icon: Icon(Icons.list),
-            label: 'Siparişler',
+            icon: Icon(Icons.cancel),
+            label: 'İptal Edilenler',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.check),
-            label: 'Onaylılar',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profil',
-          ),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profil'),
         ],
+        type: BottomNavigationBarType.fixed, // 4+ item için fixed tipi önerilir
       ),
     );
   }

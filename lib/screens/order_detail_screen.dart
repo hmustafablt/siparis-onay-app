@@ -27,17 +27,20 @@ class OrderDetailScreen extends StatelessWidget {
   }
 
   void _cancelOrder(BuildContext context) {
-    // Buraya iptal işlemi ekleyebilirsin
-    Navigator.pop(context);
+    OrderRepository.cancelOrder(order); // 👈 İptal işlemi yapılır
+    Navigator.pop(context); // Detay ekranından çıkılır
+
     showCupertinoDialog(
       context: context,
       builder: (context) => CupertinoAlertDialog(
         title: const Text('İptal Edildi'),
-        content: const Text('Sipariş iptal edildi.'),
+        content: const Text(
+          'Sipariş iptal edildi ve iptaller listesine taşındı.',
+        ),
         actions: [
           CupertinoDialogAction(
             child: const Text('Tamam'),
-            onPressed: () => Navigator.of(context).pop(),
+            onPressed: () => Navigator.of(context).pop(), // Alert kapatılır
           ),
         ],
       ),

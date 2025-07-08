@@ -74,7 +74,7 @@ class _ApprovedOrdersScreenState extends State<ApprovedOrdersScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Onaylı Siparişler"),
-        backgroundColor: Colors.indigo,
+        backgroundColor: Colors.green,
       ),
       body: orders.isEmpty
           ? const Center(

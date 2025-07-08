@@ -21,6 +21,7 @@ void main() async {
       initialRoute: '/',
       routes: {
         '/': (context) => const LoginScreen(),
+        '/login': (context) => const LoginScreen(),
         '/home': (context) => const HomePage(),
         '/register': (context) => const RegisterScreen(),
         '/profile': (context) => const ProfileScreen(),

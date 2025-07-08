@@ -85,8 +85,43 @@ class _ProfileScreenState extends State<ProfileScreen> {
           IconButton(
             icon: const Icon(Icons.logout),
             onPressed: () async {
-              await _auth.signOut();
-              Navigator.pushReplacementNamed(context, '/login');
+              final confirm = await showDialog<bool>(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: const Text('Çıkış Yap'),
+                  content: const Text(
+                    'Hesabınızdan çıkış yapmak istediğinize emin misiniz?',
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context, false),
+                      child: const Text('Vazgeç'),
+                    ),
+                    TextButton(
+                      onPressed: () => Navigator.pop(context, true),
+                      child: const Text('Çıkış Yap'),
+                    ),
+                  ],
+                ),
+              );
+
+              if (confirm == true) {
+                await _auth.signOut();
+
+                // Snackbar ile bilgi ver
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Başarıyla çıkış yapıldı.'),
+                    duration: Duration(seconds: 2),
+                  ),
+                );
+
+                // 2 saniye bekle ve login ekranına yönlendir
+                await Future.delayed(const Duration(seconds: 2));
+                Navigator.of(
+                  context,
+                ).pushNamedAndRemoveUntil('/login', (route) => false);
+              }
             },
           ),
           IconButton(
