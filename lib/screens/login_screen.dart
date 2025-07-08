@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'home_page.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -15,30 +15,33 @@ class _LoginScreenState extends State<LoginScreen> {
   String? _errorMessage;
   bool _isLoading = false;
 
-  // Basit giriş kontrolü (örnek kullanıcı)
-  final String _testEmail = 'admin@kipas.com';
-  final String _testPassword = '123456';
-
-  void _login() {
+  Future<void> _login() async {
     setState(() {
-      _isLoading = true;
       _errorMessage = null;
+      _isLoading = true;
     });
 
-    Future.delayed(const Duration(seconds: 1), () {
-      setState(() => _isLoading = false);
+    try {
+      // Firebase giriş işlemi
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+      );
 
-      if (_emailController.text.trim() == _testEmail &&
-          _passwordController.text.trim() == _testPassword) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const HomePage()),
-        );
-
-      } else {
-        setState(() => _errorMessage = 'Geçersiz e-posta veya şifre.');
-      }
-    });
+      // Başarılıysa anasayfaya yönlendir
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => HomePage()),
+      );
+    } on FirebaseAuthException catch (e) {
+      setState(() {
+        _errorMessage = e.message;
+      });
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
 
   @override
@@ -51,11 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Kipaş Holding logosu
-              Image.asset(
-                'assets/kipas_logo.png',
-                height: 100,
-              ),
+              Image.asset('assets/kipas_logo.png', height: 100),
               const SizedBox(height: 24),
               const Text(
                 'Kipaş Holding Giriş',
@@ -68,10 +67,10 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 32),
               TextField(
                 controller: _emailController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'E-posta',
                   border: OutlineInputBorder(),
-                  prefixIcon: const Icon(Icons.email),
+                  prefixIcon: Icon(Icons.email),
                 ),
                 keyboardType: TextInputType.emailAddress,
               ),
@@ -79,18 +78,15 @@ class _LoginScreenState extends State<LoginScreen> {
               TextField(
                 controller: _passwordController,
                 obscureText: true,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Şifre',
                   border: OutlineInputBorder(),
-                  prefixIcon: const Icon(Icons.lock),
+                  prefixIcon: Icon(Icons.lock),
                 ),
               ),
               const SizedBox(height: 24),
               if (_errorMessage != null)
-                Text(
-                  _errorMessage!,
-                  style: const TextStyle(color: Colors.red),
-                ),
+                Text(_errorMessage!, style: const TextStyle(color: Colors.red)),
               const SizedBox(height: 12),
               SizedBox(
                 width: double.infinity,
@@ -106,9 +102,19 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: _isLoading
                       ? const CircularProgressIndicator(color: Colors.white)
                       : const Text(
-                    'Giriş Yap',
-                    style: TextStyle(fontSize: 16, color: Colors.white),
-                  ),
+                          'Giriş Yap',
+                          style: TextStyle(fontSize: 16, color: Colors.white),
+                        ),
+                ),
+              ),
+              const SizedBox(height: 16),
+              TextButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/register');
+                },
+                child: const Text(
+                  'Hesabınız yok mu? Kayıt Ol',
+                  style: TextStyle(fontSize: 14, color: Color(0xff002B5C)),
                 ),
               ),
             ],

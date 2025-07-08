@@ -37,22 +37,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Widget _infoCard(String label, String value, IconData icon) {
     return Card(
-      elevation: 4,
-      shadowColor: Colors.indigo.withOpacity(0.3),
+      elevation: 3,
       margin: const EdgeInsets.symmetric(vertical: 8),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: ListTile(
         leading: Icon(icon, color: Colors.indigo),
         title: Text(
           label,
-          style: const TextStyle(
-            fontWeight: FontWeight.w600,
-            fontSize: 16,
-            color: Colors.indigo,
-          ),
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
         ),
         subtitle: Text(
-          value.isNotEmpty ? value : '-',
+          value,
           style: const TextStyle(fontSize: 15, color: Colors.black87),
         ),
       ),
@@ -71,16 +66,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
       );
     }
 
-    final firstName = userData!['firstName'] ?? '';
-    final lastName = userData!['lastName'] ?? '';
-    final title = userData!['title'] ?? '';
-    final location = userData!['location'] ?? '';
-    final email = userData!['email'] ?? '';
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profil'),
-        backgroundColor: Colors.indigo,
         actions: [
           IconButton(
             icon: const Icon(Icons.logout),
@@ -102,46 +90,41 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ],
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          children: [
-            CircleAvatar(
-              radius: 60,
-              backgroundColor: Colors.indigo.shade100,
-              child: Text(
-                (firstName.isNotEmpty) ? firstName[0].toUpperCase() : '?',
-                style: const TextStyle(
-                  fontSize: 50,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.indigo,
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            children: [
+              CircleAvatar(
+                radius: 50,
+                backgroundColor: Colors.indigo.shade100,
+                child: Text(
+                  (userData!['firstName'] != null &&
+                          userData!['firstName'].isNotEmpty)
+                      ? userData!['firstName'][0].toUpperCase()
+                      : '?',
+                  style: const TextStyle(fontSize: 40, color: Colors.indigo),
                 ),
               ),
-            ),
-            const SizedBox(height: 24),
-            Text(
-              '$firstName $lastName',
-              style: const TextStyle(
-                fontSize: 26,
-                fontWeight: FontWeight.bold,
-                color: Colors.indigo,
+              const SizedBox(height: 24),
+              _infoCard('Ad', userData!['firstName'] ?? '-', Icons.person),
+              _infoCard(
+                'Soyad',
+                userData!['lastName'] ?? '-',
+                Icons.person_outline,
               ),
-            ),
-            const SizedBox(height: 6),
-            Text(
-              title.isNotEmpty ? title : '-',
-              style: TextStyle(
-                fontSize: 18,
-                color: Colors.indigo.shade700,
-                fontStyle: FontStyle.italic,
+              _infoCard('Ünvan', userData!['title'] ?? '-', Icons.work_outline),
+              _infoCard(
+                'Lokasyon',
+                userData!['location'] ?? '-',
+                Icons.location_on_outlined,
               ),
-            ),
-            const SizedBox(height: 30),
-            _infoCard('Ad', firstName, Icons.person),
-            _infoCard('Soyad', lastName, Icons.person_outline),
-            _infoCard('Ünvan', title, Icons.work_outline),
-            _infoCard('Lokasyon', location, Icons.location_on_outlined),
-            _infoCard('E-posta', email, Icons.email_outlined),
-          ],
+              _infoCard(
+                'E-posta',
+                userData!['email'] ?? '-',
+                Icons.email_outlined,
+              ),
+            ],
+          ),
         ),
       ),
     );
