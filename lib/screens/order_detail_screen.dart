@@ -26,6 +26,24 @@ class OrderDetailScreen extends StatelessWidget {
     );
   }
 
+  void _cancelOrder(BuildContext context) {
+    // Buraya iptal işlemi ekleyebilirsin
+    Navigator.pop(context);
+    showCupertinoDialog(
+      context: context,
+      builder: (context) => CupertinoAlertDialog(
+        title: const Text('İptal Edildi'),
+        content: const Text('Sipariş iptal edildi.'),
+        actions: [
+          CupertinoDialogAction(
+            child: const Text('Tamam'),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
@@ -34,35 +52,47 @@ class OrderDetailScreen extends StatelessWidget {
         previousPageTitle: 'Geri',
       ),
       child: SafeArea(
-        child: Center(
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
-            constraints: const BoxConstraints(maxWidth: 400),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildReadonlyCupertinoField('Müşteri', order.customer),
-                const SizedBox(height: 16),
-                _buildReadonlyCupertinoField('Sipariş No', order.id),
-                const SizedBox(height: 16),
-                _buildReadonlyCupertinoField('Toplam Tutar', '${order.totalAmount} ₺'),
-                const SizedBox(height: 40),
-                Row(
-                  children: [
-                    Expanded(child: CupertinoButton.filled(
-                      onPressed: () => _approveOrder(context),
-                      color: Colors.green,
-                      child: const Text('Onayla'),
-                    ),
-                    ),
-                    const SizedBox(width:16),
-                    Expanded(child: CupertinoButton.filled(
-                      child: const Text('İptal Et'),
-                      onPressed: () => _approveOrder(context),),),
-                  ],
-                )
-              ],
+        child: SingleChildScrollView(
+          child: Center(
+            child: Container(
+              padding: const EdgeInsets.all(24),
+              constraints: const BoxConstraints(maxWidth: 400),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildTitle('Müşteri'),
+                  _buildValue(order.customer),
+                  const SizedBox(height: 16),
+
+                  _buildTitle('Sipariş No'),
+                  _buildValue(order.id),
+                  const SizedBox(height: 16),
+
+                  _buildTitle('Toplam Tutar'),
+                  _buildValue('${order.totalAmount} ₺'),
+                  const SizedBox(height: 40),
+
+                  Row(
+                    children: [
+                      Expanded(
+                        child: CupertinoButton.filled(
+                          onPressed: () => _approveOrder(context),
+                          color: CupertinoColors.activeGreen,
+                          child: const Text('Onayla'),
+                        ),
+                      ),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: CupertinoButton.filled(
+                          onPressed: () => _cancelOrder(context),
+                          color: CupertinoColors.systemRed,
+                          child: const Text('İptal Et'),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -70,16 +100,26 @@ class OrderDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildReadonlyCupertinoField(String placeholder, String value) {
-    return CupertinoTextField(
-      readOnly: true,
-      controller: TextEditingController(text: value),
-      placeholder: placeholder,
-      decoration: const BoxDecoration(
-        border: Border(
-          bottom: BorderSide(color: CupertinoColors.separator),
-        ),
+  Widget _buildTitle(String text) {
+    return Text(
+      text,
+      style: const TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.bold,
+        color: CupertinoColors.systemGrey,
       ),
+    );
+  }
+
+  Widget _buildValue(String value) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+      decoration: BoxDecoration(
+        color: CupertinoColors.secondarySystemFill,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Text(value, style: const TextStyle(fontSize: 18)),
     );
   }
 }
