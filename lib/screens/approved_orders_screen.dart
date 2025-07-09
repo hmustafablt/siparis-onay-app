@@ -9,9 +9,10 @@ class ApprovedOrdersScreen extends StatefulWidget {
   State<ApprovedOrdersScreen> createState() => _ApprovedOrdersScreenState();
 }
 
+//Onaylı siparişleri tekrar bekleyen siparişlere alma ekranı.
 class _ApprovedOrdersScreenState extends State<ApprovedOrdersScreen> {
   void _revertApproval(Order order) {
-    OrderRepository.revertOrderToPending(order);
+    OrderRepository.revertOrderToPending(order); //Veri güncellenir.
     setState(() {}); // Listeyi yenile
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -28,8 +29,9 @@ class _ApprovedOrdersScreenState extends State<ApprovedOrdersScreen> {
 
     Widget _buildOrderCard(Order order) {
       return Dismissible(
+        //Siparişi sola kaydırarak silme özelliği
         key: Key(order.id),
-        direction: DismissDirection.endToStart, // Sola kaydırarak silme
+        direction: DismissDirection.endToStart,
         onDismissed: (direction) {
           _revertApproval(order);
         },

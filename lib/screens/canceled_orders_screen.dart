@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../services/order_repository.dart';
-import '../models/order.dart';
 
 class CanceledOrdersScreen extends StatefulWidget {
   const CanceledOrdersScreen({super.key});
@@ -33,6 +32,7 @@ class _CanceledOrdersScreenState extends State<CanceledOrdersScreen> {
                 final order = canceledOrders[index];
 
                 return Dismissible(
+                  //Sola kaydırma ile siparişi tekrar bekleyen siparişlere alma özelliği.
                   key: Key(order.id),
                   direction: DismissDirection.endToStart,
                   background: Container(
