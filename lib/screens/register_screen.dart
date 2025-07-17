@@ -1,113 +1,121 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:get/get.dart'; // GetX kütüphanesi import edildi
+import '../controllers/register_controller.dart'; // RegisterController'ı import et
 
-class RegisterScreen extends StatefulWidget {
+class RegisterScreen extends StatelessWidget {
   const RegisterScreen({super.key});
 
   @override
-  State<RegisterScreen> createState() => _RegisterScreenState();
-}
-
-class _RegisterScreenState extends State<RegisterScreen> {
-  final TextEditingController _firstNameController = TextEditingController();
-  final TextEditingController _lastNameController = TextEditingController();
-  final TextEditingController _titleController = TextEditingController();
-  final TextEditingController _locationController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-
-  String? _errorMessage;
-  bool _isLoading = false;
-
-  Future<void> _register() async {
-    setState(() {
-      _errorMessage = null;
-      _isLoading = true;
-    });
-
-    try {
-      // Firebase Authentication'a kayıt
-      final userCredential = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(
-            email: _emailController.text.trim(),
-            password: _passwordController.text.trim(),
-          );
-
-      final uid = userCredential.user!.uid;
-
-      // Firestore'a kullanıcı bilgilerini ekleme
-      await FirebaseFirestore.instance.collection('users').doc(uid).set({
-        'firstName': _firstNameController.text.trim(),
-        'lastName': _lastNameController.text.trim(),
-        'title': _titleController.text.trim(),
-        'location': _locationController.text.trim(),
-        'email': _emailController.text.trim(),
-        'createdAt': FieldValue.serverTimestamp(),
-      });
-
-      // Başarılıysa giriş ekranına yönlendir
-      Navigator.pop(context);
-    } on FirebaseAuthException catch (e) {
-      setState(() => _errorMessage = e.message);
-    } catch (e) {
-      setState(() => _errorMessage = "Beklenmeyen bir hata oluştu.");
-    } finally {
-      setState(() => _isLoading = false);
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
+    // RegisterController'ı bul veya oluştur.
+    final RegisterController controller = Get.put(RegisterController());
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Kayıt Ol')),
+      appBar: AppBar(
+        title: const Text('Kayıt Ol'),
+        backgroundColor: Colors.indigo, // AppBar rengi eklendi
+      ),
       body: Padding(
         padding: const EdgeInsets.all(24),
         child: SingleChildScrollView(
           child: Column(
             children: [
               TextField(
-                controller: _firstNameController,
-                decoration: const InputDecoration(labelText: 'Ad'),
+                controller: controller
+                    .firstNameController, // Controller'dan TextEditingController'ı al
+                decoration: const InputDecoration(
+                  labelText: 'Ad',
+                  border: OutlineInputBorder(),
+                ),
               ),
               const SizedBox(height: 12),
               TextField(
-                controller: _lastNameController,
-                decoration: const InputDecoration(labelText: 'Soyad'),
+                controller: controller
+                    .lastNameController, // Controller'dan TextEditingController'ı al
+                decoration: const InputDecoration(
+                  labelText: 'Soyad',
+                  border: OutlineInputBorder(),
+                ),
               ),
               const SizedBox(height: 12),
               TextField(
-                controller: _titleController,
-                decoration: const InputDecoration(labelText: 'Ünvan'),
+                controller: controller
+                    .titleController, // Controller'dan TextEditingController'ı al
+                decoration: const InputDecoration(
+                  labelText: 'Ünvan',
+                  border: OutlineInputBorder(),
+                ),
               ),
               const SizedBox(height: 12),
               TextField(
-                controller: _locationController,
-                decoration: const InputDecoration(labelText: 'Lokasyon'),
+                controller: controller
+                    .locationController, // Controller'dan TextEditingController'ı al
+                decoration: const InputDecoration(
+                  labelText: 'Lokasyon',
+                  border: OutlineInputBorder(),
+                ),
               ),
               const SizedBox(height: 12),
               TextField(
-                controller: _emailController,
-                decoration: const InputDecoration(labelText: 'E-posta'),
+                controller: controller
+                    .emailController, // Controller'dan TextEditingController'ı al
+                decoration: const InputDecoration(
+                  labelText: 'E-posta',
+                  border: OutlineInputBorder(),
+                ),
                 keyboardType: TextInputType.emailAddress,
               ),
               const SizedBox(height: 12),
               TextField(
-                controller: _passwordController,
+                controller: controller
+                    .passwordController, // Controller'dan TextEditingController'ı al
                 obscureText: true,
-                decoration: const InputDecoration(labelText: 'Şifre'),
+                decoration: const InputDecoration(
+                  labelText: 'Şifre',
+                  border: OutlineInputBorder(),
+                ),
               ),
               const SizedBox(height: 24),
-              if (_errorMessage != null)
-                Text(_errorMessage!, style: const TextStyle(color: Colors.red)),
+              Obx(
+                () =>
+                    controller.errorMessage !=
+                        null // Reaktif hata mesajını dinle
+                    ? Text(
+                        controller.errorMessage!,
+                        style: const TextStyle(color: Colors.red),
+                      )
+                    : const SizedBox.shrink(), // Hata yoksa boşluk bırak
+              ),
               const SizedBox(height: 12),
               SizedBox(
                 width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: _isLoading ? null : _register,
-                  child: _isLoading
-                      ? const CircularProgressIndicator()
-                      : const Text('Kayıt Ol'),
+                child: Obx(
+                  () => ElevatedButton(
+                    onPressed: controller.isLoading
+                        ? null
+                        : controller
+                              .register, // Reaktif yüklenme durumunu dinle
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.indigo, // Buton rengi eklendi
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    child:
+                        controller
+                            .isLoading // Reaktif yüklenme durumunu dinle
+                        ? const CircularProgressIndicator(
+                            color: Colors.white,
+                          ) // Yüklenme göstergesi rengi
+                        : const Text(
+                            'Kayıt Ol',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.white,
+                            ), // Metin rengi
+                          ),
+                  ),
                 ),
               ),
             ],

@@ -1,77 +1,47 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../screens/order_detail_screen.dart';
-import '../services/order_repository.dart';
+import 'package:get/get.dart'; // GetX kütüphanesi import edildi
+import '../controllers/order_list_controller.dart'; // OrderListController'ı import et
 
-class OrderListScreen extends StatefulWidget {
+class OrderListScreen extends StatelessWidget {
   const OrderListScreen({super.key});
 
   @override
-  State<OrderListScreen> createState() => _OrderListScreenState();
-}
-
-class _OrderListScreenState extends State<OrderListScreen> {
-  @override
   Widget build(BuildContext context) {
-    final orders = OrderRepository.pendingOrders;
-
-    Widget _buildOrderCard(order) {
-      return Card(
-        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        elevation: 4,
-        shadowColor: Colors.indigo.withOpacity(0.3),
-        child: ListTile(
-          leading: CircleAvatar(
-            backgroundColor: Colors.indigo.shade100,
-            child: Text(
-              order.customer.isNotEmpty ? order.customer[0].toUpperCase() : '?',
-              style: const TextStyle(
-                color: Colors.indigo,
-                fontWeight: FontWeight.bold,
-                fontSize: 22,
-              ),
-            ),
-          ),
-          title: Text(
-            order.customer,
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-          ),
-          subtitle: Text("${order.totalAmount} ₺"),
-          trailing: const Icon(
-            CupertinoIcons.arrow_right_circle,
-            color: Colors.indigo,
-          ),
-          onTap: () async {
-            await Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (_) => OrderDetailScreen(order: order),
-              ),
-            );
-            setState(() {}); // Onaylandıysa listeyi güncelle
-          },
-        ),
-      );
-    }
+    // OrderListController'ı bul veya oluştur
+    final OrderListController controller = Get.put(OrderListController());
 
     return Scaffold(
       appBar: AppBar(
         title: const Text("Bekleyen Siparişler"),
-        backgroundColor: Color.fromARGB(0, 30, 29, 131),
+        // AppBar rengi için Color.fromARGB(0, 30, 29, 131) şeffaf bir renk verir.
+        // Genellikle tam opak bir renk tercih edilir.
+        // Örnek: Colors.indigo veya Color(0xFF1E1D83)
+        backgroundColor: Colors.indigo,
       ),
-      body: orders.isEmpty
-          ? const Center(
-              child: Text(
-                "Tüm siparişler onaylandı",
-                style: TextStyle(fontSize: 18, color: Colors.grey),
-              ),
-            )
-          : ListView.builder(
-              padding: const EdgeInsets.symmetric(vertical: 12),
-              itemCount: orders.length,
-              itemBuilder: (context, index) => _buildOrderCard(orders[index]),
+      body: Obx(() {
+        // Controller'daki reaktif listeyi dinliyoruz
+        final orders = controller.pendingOrders;
+
+        if (orders.isEmpty) {
+          return const Center(
+            child: Text(
+              "Tüm siparişler onaylandı",
+              style: TextStyle(fontSize: 18, color: Colors.grey),
             ),
+          );
+        } else {
+          return ListView.builder(
+            padding: const EdgeInsets.symmetric(vertical: 12),
+            itemCount: orders.length,
+            itemBuilder: (context, index) {
+              final order = orders[index];
+              return controller.buildOrderCard(
+                order,
+              ); // Controller'daki metodu çağır
+            },
+          );
+        }
+      }),
     );
   }
 }
