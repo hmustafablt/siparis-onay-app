@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart'; // Material Design widget'ları için
 import 'package:get/get.dart'; // GetX kütüphanesi import edildi
-import '../models/order.dart'; // Order modelini import et
 import '../controllers/order_detail_controller.dart'; // OrderDetailController'ı import et
 
 class OrderDetailScreen extends StatelessWidget {
