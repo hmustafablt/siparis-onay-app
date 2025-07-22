@@ -65,15 +65,18 @@ class RegisterController extends GetxController {
         'createdAt': FieldValue.serverTimestamp(),
       });
 
-      // Başarılıysa kullanıcıya bilgi ver ve giriş ekranına yönlendir
+      // Başarılıysa kullanıcıya bilgi ver
       Get.snackbar(
         'Başarılı',
         'Hesabınız başarıyla oluşturuldu. Giriş yapabilirsiniz.',
         backgroundColor: Colors.green,
         colorText: Colors.white,
         snackPosition: SnackPosition.BOTTOM,
-        duration: const Duration(seconds: 3),
+        duration: const Duration(seconds: 2), // SnackBar'ın süresi
       );
+
+      // SnackBar'ın görünmesi için kısa bir gecikme ekle
+      await Future.delayed(const Duration(seconds: 2)); // Gecikme eklendi
 
       // Giriş ekranına geri dön
       Get.back();

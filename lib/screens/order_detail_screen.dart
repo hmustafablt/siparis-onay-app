@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart'; // Material Design widget'ları için
 import 'package:get/get.dart'; // GetX kütüphanesi import edildi
+import '../models/order.dart'; // Order modelini import et
 import '../controllers/order_detail_controller.dart'; // OrderDetailController'ı import et
 
 class OrderDetailScreen extends StatelessWidget {
@@ -7,11 +8,9 @@ class OrderDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // OrderDetailController'ı bul veya oluştur.
-    // Binding kullanıldığı için Get.find() de kullanılabilir, ancak Get.put() daha geneldir.
-    // Eğer binding'i main.dart'ta tanımladıysak Get.find() daha uygun olur.
-    // Bu örnekte binding'i kullandığımız için Get.find() kullanacağız.
-    final OrderDetailController controller = Get.find<OrderDetailController>();
+    // OrderDetailController'ı bul. Binding kullanıldığı için Get.find() daha uygundur.
+    final OrderDetailsController controller =
+        Get.find<OrderDetailsController>();
 
     return Scaffold(
       appBar: AppBar(
@@ -24,25 +23,33 @@ class OrderDetailScreen extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.all(24),
               constraints: const BoxConstraints(maxWidth: 400),
-              child: Obx(
-                () => Column(
-                  // Obx ile tüm Column'u sarmalayarak reaktif güncellemeleri sağlarız
+              child: Obx(() {
+                // Controller'daki reaktif order nesnesini dinliyoruz
+                if (controller.order.value == null) {
+                  // Sipariş yüklenirken veya bulunamazsa bir yüklenme göstergesi veya hata mesajı
+                  return const Center(child: CircularProgressIndicator());
+                }
+                final order = controller
+                    .order
+                    .value!; // Nullable olduğu için ! ile erişim
+
+                return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     _buildTitle('Müşteri'),
                     _buildValue(
-                      controller.order.customer.value,
-                    ), // Reaktif değere erişim
+                      order.customer.value,
+                    ), // Düzeltme: .value eklendi
                     const SizedBox(height: 16),
 
                     _buildTitle('Sipariş No'),
-                    _buildValue(controller.order.id), // ID zaten reaktif değil
+                    _buildValue(order.id), // ID zaten reaktif değil, doğru
                     const SizedBox(height: 16),
 
                     _buildTitle('Toplam Tutar'),
                     _buildValue(
-                      '${controller.order.totalAmount.value} ₺',
-                    ), // Reaktif değere erişim
+                      '${order.totalAmount.value} ₺',
+                    ), // Düzeltme: .value eklendi
                     const SizedBox(height: 40),
 
                     Row(
@@ -85,8 +92,8 @@ class OrderDetailScreen extends StatelessWidget {
                       ],
                     ),
                   ],
-                ),
-              ),
+                );
+              }),
             ),
           ),
         ),

@@ -26,10 +26,10 @@ class OrderListController extends GetxController {
   void goToOrderDetail(Order order) {
     // GetX'in rota yönetimini kullanarak sipariş detay ekranına git
     // Sadece siparişin ID'sini arguments olarak gönderiyoruz.
-    Get.toNamed(
-      Routes.ORDER_DETAIL,
-      arguments: order.id,
-    ); // Düzeltme burada yapıldı!
+    print(
+      'OrderListController: Navigating to OrderDetail with ID: ${order.id}',
+    ); // Debug print
+    Get.toNamed(Routes.ORDER_DETAIL, arguments: order.id);
   }
 
   // Sipariş kartını oluşturma metodu

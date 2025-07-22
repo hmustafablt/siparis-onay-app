@@ -6,6 +6,6 @@ class OrderDetailBinding extends Bindings {
   void dependencies() {
     // OrderDetailController'ı tembelce (lazy) yükle.
     // Controller, Get.arguments ile Order objesini alacak.
-    Get.lazyPut<OrderDetailController>(() => OrderDetailController());
+    Get.lazyPut<OrderDetailsController>(() => OrderDetailsController());
   }
 }
