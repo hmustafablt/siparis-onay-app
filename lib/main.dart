@@ -5,16 +5,19 @@ import 'package:mbtest/binding/login_binding.dart';
 import 'package:mbtest/binding/order_detail_binding.dart';
 import 'package:mbtest/binding/order_list_binding.dart';
 import 'package:mbtest/binding/profile_binding.dart';
+import 'package:mbtest/binding/profile_edit_binding.dart';
 import 'package:mbtest/binding/register_binding.dart';
+import 'package:mbtest/screens/profil_screen.dart';
+import 'package:mbtest/screens/profile_edit_screen.dart';
+
 import 'firebase_options.dart';
 
 // Ekran importları
 import 'screens/login_screen.dart';
 import 'screens/home_page.dart';
 import 'screens/register_screen.dart';
-import 'screens/order_detail_screen.dart'; // OrderDetailScreen import edildi
-import 'screens/order_list_screen.dart'; // OrderListScreen import edildi
-import 'screens/profile_edit_screen.dart'; // ProfileEditScreen import edildi
+import 'screens/order_detail_screen.dart';
+import 'screens/order_list_screen.dart';
 
 // Servis importu
 import 'services/order_repository.dart'; // OrderRepository import edildi
@@ -39,12 +42,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      // MaterialApp yerine GetMaterialApp kullanıldı
       title: 'Sipariş Takip',
       theme: ThemeData(primarySwatch: Colors.indigo),
       debugShowCheckedModeBanner: false,
 
-      // GetX'in rota yönetimi için initialRoute ve getPages kullanılıyor
       initialRoute: Routes.LOGIN, // Uygulamanın başlangıç rotası
       getPages: AppPages.routes, // Tüm uygulama rotaları burada tanımlanacak
     );
@@ -83,7 +84,8 @@ abstract class AppPages {
     ),
     GetPage(
       name: Routes.PROFILE,
-      page: () => const ProfileEditScreen(),
+      page: () =>
+          const ProfileScreen(), // **Bu satır ProfileScreen'e yönlendiriyor**
       binding: ProfileBinding(), // ProfileScreen için ProfileBinding eklendi
     ),
     GetPage(
@@ -100,8 +102,9 @@ abstract class AppPages {
     ),
     GetPage(
       name: Routes.PROFILE_EDIT,
-      page: () => const ProfileEditScreen(), // ProfileEditScreen eklendi
-      // binding: ProfileEditBinding(), // ProfileEditScreen için binding daha sonra eklenecek
+      page: () =>
+          const ProfileEditScreen(), // **Bu satır ProfileEditScreen'e yönlendiriyor**
+      binding: ProfileEditBinding(), // ProfileEditScreen için binding eklendi
     ),
     // Ana sayfa '/' rotası için özel bir durum. Genellikle initialRoute'u doğrudan bir named route'a bağlamak daha temizdir.
     // Eğer '/' rotası hala gerekli ise:

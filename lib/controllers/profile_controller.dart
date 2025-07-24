@@ -13,6 +13,16 @@ class ProfileController extends GetxController {
   // Yüklenme durumunu reaktif olarak tutuyoruz
   final RxBool isLoading = true.obs;
 
+  String? get firstName => null;
+
+  String? get lastName => null;
+
+  String? get title => null;
+
+  String? get location => null;
+
+  String? get email => null;
+
   @override
   void onInit() {
     super.onInit();

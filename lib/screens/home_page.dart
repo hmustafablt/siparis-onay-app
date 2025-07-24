@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart'; // GetX kütüphanesi import edildi
-
-// Controller import edildi
+import 'package:get/get.dart';
 import '../controllers/home_controller.dart';
 
 // Ekran importları (Controller'da da tanımlanabilir ama View'da da kalabilir)

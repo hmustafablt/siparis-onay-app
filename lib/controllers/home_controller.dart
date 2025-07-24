@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart'; // Widget'ları import etmemize gerek yok ama bazen ihtiyaç duyulabilir.
-import 'package:mbtest/screens/profile_edit_screen.dart';
+import 'package:mbtest/screens/profil_screen.dart';
 
 // Ekran importları (Controller'ın doğrudan UI widget'larını bilmesi gerekmez,
 // ancak _pages listesi için referanslar burada tutulabilir veya View'da kalabilir)
@@ -18,7 +18,7 @@ class HomeController extends GetxController {
     OrderListScreen(), // Bekleyenler
     ApprovedOrdersScreen(), // Onaylananlar
     CanceledOrdersScreen(), // İptal Edilenler
-    ProfileEditScreen(), // Profil
+    ProfileScreen(), //Profil Detay
   ];
 
   // Tab değiştiğinde çağrılacak metod
