@@ -7,7 +7,6 @@ class OrderListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // OrderListController'ı bul veya oluştur
     final OrderListController controller = Get.put(OrderListController());
 
     return Scaffold(
@@ -19,7 +18,7 @@ class OrderListScreen extends StatelessWidget {
         backgroundColor: Colors.indigo,
       ),
       body: Obx(() {
-        // Controller'daki reaktif listeyi dinliyoruz
+        // Controller'daki listeyi dinliyoruz
         final orders = controller.pendingOrders;
 
         if (orders.isEmpty) {

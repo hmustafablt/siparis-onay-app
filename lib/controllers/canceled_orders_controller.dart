@@ -1,14 +1,10 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart'; // SnackBar için gerekli
 import '../models/order.dart';
-import '../services/order_repository.dart'; // OrderRepository'yi import et
+import '../services/order_repository.dart';
 
 class CanceledOrdersController extends GetxController {
-  // OrderRepository'nin instance'ını GetX'ten alıyoruz.
   final OrderRepository _orderRepository = Get.find<OrderRepository>();
-
-  // İptal edilmiş siparişler listesini OrderRepository'den doğrudan referans alıyoruz.
-  // Bu liste zaten RxList olduğu için tekrar .obs yapmamıza gerek yok.
   late final RxList<Order> canceledOrders;
 
   @override
@@ -21,22 +17,18 @@ class CanceledOrdersController extends GetxController {
     );
   }
 
-  // Siparişi bekleyen duruma geri alma işlemi
   void revertOrderToPending(Order order) {
-    _orderRepository.revertOrderToPending(
-      order,
-    ); // OrderRepository metodunu çağır
+    _orderRepository.revertOrderToPending(order);
 
-    // SnackBar göstermek için Get.snackbar kullanıyoruz
+    // SnackBar göstermek için Get.snackbar kullandım.
     Get.snackbar(
       "Sipariş Durumu",
-      "${order.customer.value} tekrar bekleyen siparişlere alındı.", // .value ile reaktif değere erişim
+      "${order.customer.value} tekrar bekleyen siparişlere alındı.",
       backgroundColor: Colors.blue.shade700,
       colorText: Colors.white,
       snackPosition: SnackPosition.BOTTOM,
       duration: const Duration(seconds: 2),
     );
-    // UI otomatik olarak güncellenecek çünkü canceledOrders listesi reaktif.
   }
 
   // Sipariş kartını oluşturma metodu
@@ -52,7 +44,7 @@ class CanceledOrdersController extends GetxController {
         child: const Icon(Icons.undo, color: Colors.white, size: 28),
       ),
       onDismissed: (direction) {
-        revertOrderToPending(order); // Controller metodunu çağır
+        revertOrderToPending(order);
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -64,12 +56,11 @@ class CanceledOrdersController extends GetxController {
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Obx(
-              () => // Reaktif değerler için Obx kullanıyoruz
-              Column(
+              () => Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    order.customer.value, // .value ile reaktif değere erişim
+                    order.customer.value,
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -87,7 +78,7 @@ class CanceledOrdersController extends GetxController {
                         ),
                       ),
                       Text(
-                        "${order.totalAmount.value} ₺", // .value ile reaktif değere erişim
+                        "${order.totalAmount.value} ₺",
                         style: const TextStyle(
                           color: Colors.redAccent,
                           fontWeight: FontWeight.w600,

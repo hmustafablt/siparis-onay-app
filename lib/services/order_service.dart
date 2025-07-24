@@ -96,7 +96,7 @@ class OrderRepository extends GetxService {
     final index = _allOrders.indexWhere((o) => o.id == order.id);
     if (index != -1) {
       _allOrders[index].status.value = 'approved';
-      _filterOrders(); // Filtrelenmiş listeleri güncelle
+      _filterOrders();
     }
   }
 

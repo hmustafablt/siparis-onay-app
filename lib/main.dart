@@ -20,15 +20,13 @@ import 'screens/order_detail_screen.dart';
 import 'screens/order_list_screen.dart';
 
 // Servis importu
-import 'services/order_repository.dart'; // OrderRepository import edildi
+import 'services/order_repository.dart';
 
 void main() async {
-  // Flutter widget binding'lerinin başlatıldığından emin ol
   WidgetsFlutterBinding.ensureInitialized();
-  // Firebase'i başlat
+
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  // OrderRepository'yi GetX'e ekle (singleton olarak).
   // Bu, uygulama başladığında OrderRepository'nin bir instance'ının oluşturulmasını ve
   // Get.find<OrderRepository>() ile her yerden erişilebilir olmasını sağlar.
   Get.put(OrderRepository());
@@ -69,49 +67,39 @@ abstract class AppPages {
     GetPage(
       name: Routes.LOGIN,
       page: () => const LoginScreen(),
-      binding: LoginBinding(), // LoginScreen için LoginBinding eklendi
+      binding: LoginBinding(),
     ),
-    GetPage(
-      name: Routes.HOME,
-      page: () => const HomePage(),
-      // HomePage'in altındaki tab'lar için Controller'lar kendi içinde Get.put ile başlatılabilir.
-      // Eğer HomePage için özel bir binding gerekiyorsa buraya eklenebilir.
-    ),
+    GetPage(name: Routes.HOME, page: () => const HomePage()),
     GetPage(
       name: Routes.REGISTER,
       page: () => const RegisterScreen(),
-      binding: RegisterBinding(), // RegisterScreen için RegisterBinding eklendi
+      binding: RegisterBinding(),
     ),
     GetPage(
       name: Routes.PROFILE,
-      page: () =>
-          const ProfileScreen(), // **Bu satır ProfileScreen'e yönlendiriyor**
-      binding: ProfileBinding(), // ProfileScreen için ProfileBinding eklendi
+      page: () => const ProfileScreen(),
+      binding: ProfileBinding(),
     ),
     GetPage(
       name: Routes.ORDER_DETAIL,
       page: () => const OrderDetailScreen(),
-      binding:
-          OrderDetailBinding(), // OrderDetailScreen için OrderDetailBinding eklendi
+      binding: OrderDetailBinding(),
     ),
     GetPage(
       name: Routes.ORDER_LIST,
       page: () => const OrderListScreen(),
-      binding:
-          OrderListBinding(), // OrderListScreen için OrderListBinding eklendi
+      binding: OrderListBinding(),
     ),
     GetPage(
       name: Routes.PROFILE_EDIT,
-      page: () =>
-          const ProfileEditScreen(), // **Bu satır ProfileEditScreen'e yönlendiriyor**
-      binding: ProfileEditBinding(), // ProfileEditScreen için binding eklendi
+      page: () => const ProfileEditScreen(),
+      binding: ProfileEditBinding(),
     ),
-    // Ana sayfa '/' rotası için özel bir durum. Genellikle initialRoute'u doğrudan bir named route'a bağlamak daha temizdir.
-    // Eğer '/' rotası hala gerekli ise:
+
     GetPage(
       name: '/', // '/' rotası da LoginScreen'e yönlendirilsin
       page: () => const LoginScreen(),
-      binding: LoginBinding(), // LoginScreen için LoginBinding eklendi
+      binding: LoginBinding(),
     ),
   ];
 }

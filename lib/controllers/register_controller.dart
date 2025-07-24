@@ -42,8 +42,8 @@ class RegisterController extends GetxController {
 
   // Kayıt olma metodu
   Future<void> register() async {
-    _errorMessage.value = ''; // Hata mesajını temizle
-    _isLoading.value = true; // Yüklenme durumunu başlat
+    _errorMessage.value = '';
+    _isLoading.value = true;
 
     try {
       // Firebase Authentication'a kayıt
@@ -72,21 +72,19 @@ class RegisterController extends GetxController {
         backgroundColor: Colors.green,
         colorText: Colors.white,
         snackPosition: SnackPosition.BOTTOM,
-        duration: const Duration(seconds: 2), // SnackBar'ın süresi
+        duration: const Duration(seconds: 1), // SnackBar'ın süresi
       );
 
       // SnackBar'ın görünmesi için kısa bir gecikme ekle
-      await Future.delayed(const Duration(seconds: 2)); // Gecikme eklendi
+      await Future.delayed(const Duration(seconds: 1)); // Gecikme eklendi
 
       // Giriş ekranına geri dön
       Get.back();
     } on FirebaseAuthException catch (e) {
-      _errorMessage.value =
-          e.message ?? 'Bir hata oluştu.'; // Hata mesajını ayarla
+      _errorMessage.value = e.message ?? 'Bir hata oluştu.';
       print('Firebase Auth Hatası: ${e.code} - ${e.message}');
     } catch (e) {
-      _errorMessage.value =
-          "Beklenmeyen bir hata oluştu: ${e.toString()}"; // Diğer hatalar
+      _errorMessage.value = "Beklenmeyen bir hata oluştu: ${e.toString()}";
       print('Genel Hata: ${e.toString()}');
     } finally {
       _isLoading.value = false; // Yüklenme durumunu bitir

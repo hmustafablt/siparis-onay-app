@@ -19,7 +19,7 @@ class CanceledOrdersScreen extends StatelessWidget {
         backgroundColor: Colors.red.shade600,
       ),
       body: Obx(() {
-        // Controller'daki reaktif listeyi dinliyoruz
+        // Controller'daki listeyi dinliyoruz
         final canceledOrders = controller.canceledOrders;
 
         if (canceledOrders.isEmpty) {

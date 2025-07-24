@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../models/order.dart';
-import '../services/order_repository.dart'; // OrderRepository'yi import et
+import '../services/order_repository.dart';
 
 class ApprovedOrdersController extends GetxController {
   // OrderRepository'nin instance'ını GetX'ten alıyoruz.
@@ -24,9 +24,7 @@ class ApprovedOrdersController extends GetxController {
 
   // Onaylı siparişi bekleyen siparişlere geri alma işlemi
   void revertApproval(Order order) {
-    _orderRepository.revertOrderToPending(
-      order,
-    ); // OrderRepository metodunu çağır
+    _orderRepository.revertOrderToPending(order);
 
     Get.snackbar(
       "Sipariş Durumu",

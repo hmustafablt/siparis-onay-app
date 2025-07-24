@@ -96,15 +96,13 @@ class RegisterScreen extends StatelessWidget {
                         : controller
                               .register, // Reaktif yüklenme durumunu dinle
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.indigo, // Buton rengi eklendi
+                      backgroundColor: Colors.indigo,
                       padding: const EdgeInsets.symmetric(vertical: 14),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
                     ),
-                    child:
-                        controller
-                            .isLoading // Reaktif yüklenme durumunu dinle
+                    child: controller.isLoading
                         ? const CircularProgressIndicator(
                             color: Colors.white,
                           ) // Yüklenme göstergesi rengi

@@ -7,8 +7,6 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // LoginController'ı bul veya oluştur.
-    // Bu sayfaya gelindiğinde Controller'ın başlatılmasını sağlar.
     final LoginController controller = Get.put(LoginController());
 
     return Scaffold(
@@ -19,18 +17,8 @@ class LoginScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset(
-                'assets/kipas_logo.png',
-                height: 100,
-              ), // Logo yolu doğru olduğundan emin olun
+              Image.asset('assets/kipas_logo.png', height: 100),
 
-              // Eğer logo yoksa veya hata veriyorsa, geçici olarak kaldırılabilir veya bir placeholder kullanılabilir.
-
-              /* const Icon(
-                Icons.lock,
-                size: 100,
-                color: Color(0xff002B5C),
-              ), // Geçici logo */
               const SizedBox(height: 24),
               const Text(
                 'Kipaş Holding Giriş',
@@ -64,9 +52,7 @@ class LoginScreen extends StatelessWidget {
               ),
               const SizedBox(height: 24),
               Obx(
-                () =>
-                    controller.errorMessage !=
-                        null // Reaktif hata mesajını dinle
+                () => controller.errorMessage != null
                     ? Text(
                         controller.errorMessage!,
                         style: const TextStyle(color: Colors.red),
@@ -78,9 +64,7 @@ class LoginScreen extends StatelessWidget {
                 width: double.infinity,
                 child: Obx(
                   () => ElevatedButton(
-                    onPressed: controller.isLoading
-                        ? null
-                        : controller.login, // Reaktif yüklenme durumunu dinle
+                    onPressed: controller.isLoading ? null : controller.login,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xff002B5C),
                       padding: const EdgeInsets.symmetric(vertical: 14),
@@ -88,9 +72,7 @@ class LoginScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(8),
                       ),
                     ),
-                    child:
-                        controller
-                            .isLoading // Reaktif yüklenme durumunu dinle
+                    child: controller.isLoading
                         ? const CircularProgressIndicator(color: Colors.white)
                         : const Text(
                             'Giriş Yap',
@@ -101,8 +83,7 @@ class LoginScreen extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               TextButton(
-                onPressed:
-                    controller.goToRegister, // Controller'daki metodu çağır
+                onPressed: controller.goToRegister,
                 child: const Text(
                   'Hesabınız yok mu? Kayıt Ol',
                   style: TextStyle(fontSize: 14, color: Color(0xff002B5C)),

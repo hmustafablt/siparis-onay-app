@@ -18,7 +18,7 @@ class ApprovedOrdersScreen extends StatelessWidget {
         backgroundColor: Colors.green,
       ),
       body: Obx(() {
-        // Controller'daki reaktif listeyi dinliyoruz
+        // Controller'daki listeyi dinliyoruz
         final orders = controller.approvedOrders;
 
         if (orders.isEmpty) {

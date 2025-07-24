@@ -20,14 +20,12 @@ class LoginController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    // Controller başlatıldığında yapılacak işlemler
-    // Örneğin, kaydedilmiş e-posta veya şifre varsa buraya yüklenebilir.
+
     print('LoginController başlatıldı');
   }
 
   @override
   void onClose() {
-    // Controller kapatıldığında (bellekten atıldığında) TextEditingController'ları dispose et
     emailController.dispose();
     passwordController.dispose();
     super.onClose();
@@ -56,7 +54,7 @@ class LoginController extends GetxController {
           'Beklenmedik bir hata oluştu: ${e.toString()}'; // Diğer hatalar
       print('Genel Hata: ${e.toString()}');
     } finally {
-      _isLoading.value = false; // Yüklenme durumunu bitir
+      _isLoading.value = false;
     }
   }
 

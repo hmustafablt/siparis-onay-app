@@ -1,15 +1,12 @@
 import 'package:get/get.dart';
-import 'package:flutter/material.dart'; // Widget'lar ve ikonlar için
+import 'package:flutter/material.dart';
 import '../models/order.dart';
 import '../services/order_repository.dart';
 import '../main.dart'; // Routes sınıfına erişmek için
 
 class OrderListController extends GetxController {
-  // OrderRepository'nin instance'ını GetX'ten alıyoruz.
   final OrderRepository _orderRepository = Get.find<OrderRepository>();
 
-  // Bekleyen siparişler listesini OrderRepository'den doğrudan referans alıyoruz.
-  // Bu liste zaten RxList olduğu için tekrar .obs yapmamıza gerek yok.
   late final RxList<Order> pendingOrders;
 
   @override
@@ -28,7 +25,7 @@ class OrderListController extends GetxController {
     // Sadece siparişin ID'sini arguments olarak gönderiyoruz.
     print(
       'OrderListController: Navigating to OrderDetail with ID: ${order.id}',
-    ); // Debug print
+    );
     Get.toNamed(Routes.ORDER_DETAIL, arguments: order.id);
   }
 
@@ -40,8 +37,7 @@ class OrderListController extends GetxController {
       elevation: 4,
       shadowColor: Colors.indigo.withOpacity(0.3),
       child: Obx(
-        () => // Reaktif değerler için Obx kullanıyoruz
-        ListTile(
+        () => ListTile(
           leading: CircleAvatar(
             backgroundColor: Colors.indigo.shade100,
             child: Text(
@@ -49,8 +45,7 @@ class OrderListController extends GetxController {
                       .customer
                       .value
                       .isNotEmpty // .value ile reaktif değere erişim
-                  ? order.customer.value[0]
-                        .toUpperCase() // .value ile reaktif değere erişim
+                  ? order.customer.value[0].toUpperCase()
                   : '?',
               style: const TextStyle(
                 color: Colors.indigo,
@@ -60,18 +55,13 @@ class OrderListController extends GetxController {
             ),
           ),
           title: Text(
-            order.customer.value, // .value ile reaktif değere erişim
+            order.customer.value,
             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
           ),
-          subtitle: Text(
-            "${order.totalAmount.value} ₺",
-          ), // .value ile reaktif değere erişim
-          trailing: const Icon(
-            Icons.arrow_forward_ios, // Material ikon kullanıldı
-            color: Colors.indigo,
-          ),
+          subtitle: Text("${order.totalAmount.value} ₺"),
+          trailing: const Icon(Icons.arrow_forward_ios, color: Colors.indigo),
           onTap: () {
-            goToOrderDetail(order); // Controller metodunu çağır
+            goToOrderDetail(order);
           },
         ),
       ),

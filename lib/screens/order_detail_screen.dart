@@ -14,7 +14,7 @@ class OrderDetailScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Sipariş Detayı'),
-        backgroundColor: Colors.indigo, // AppBar rengi
+        backgroundColor: Colors.indigo,
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -23,7 +23,7 @@ class OrderDetailScreen extends StatelessWidget {
               padding: const EdgeInsets.all(24),
               constraints: const BoxConstraints(maxWidth: 400),
               child: Obx(() {
-                // Controller'daki reaktif order nesnesini dinliyoruz
+                // Controller'daki order nesnesini dinliyoruz
                 if (controller.order.value == null) {
                   // Sipariş yüklenirken veya bulunamazsa bir yüklenme göstergesi veya hata mesajı
                   return const Center(child: CircularProgressIndicator());
@@ -76,7 +76,7 @@ class OrderDetailScreen extends StatelessWidget {
                             onPressed: controller
                                 .cancelOrder, // Controller metodunu çağır
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.red, // Material renk
+                              backgroundColor: Colors.red,
                               padding: const EdgeInsets.symmetric(vertical: 14),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8),

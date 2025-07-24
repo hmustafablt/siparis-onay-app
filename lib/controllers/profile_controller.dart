@@ -1,16 +1,15 @@
 import 'package:get/get.dart';
-import 'package:flutter/material.dart'; // IconData ve SnackBar için
+import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../main.dart'; // Routes sınıfına erişmek için
+import '../main.dart';
 
 class ProfileController extends GetxController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  // Kullanıcı verilerini reaktif olarak tutuyoruz
   final Rx<Map<String, dynamic>?> userData = Rx<Map<String, dynamic>?>(null);
-  // Yüklenme durumunu reaktif olarak tutuyoruz
+
   final RxBool isLoading = true.obs;
 
   String? get firstName => null;
@@ -29,7 +28,7 @@ class ProfileController extends GetxController {
     // Controller başlatıldığında kullanıcı verilerini yükle
     _loadUserData();
     // Firebase Auth durumu değiştiğinde (örneğin çıkış yapıldığında) dinle
-    // Bu, kullanıcının oturum açma durumuna göre UI'ı güncellemek için faydalıdır.
+    // Bu, kullanıcının oturum açma durumuna göre UI'ı güncellemek için.
     _auth.authStateChanges().listen((User? user) {
       if (user == null) {
         // Kullanıcı çıkış yaptıysa veya oturumu kapandıysa
@@ -112,7 +111,7 @@ class ProfileController extends GetxController {
   }
 
   // Bilgi kartı widget'ı (Controller içinde de tanımlanabilir veya View'da kalabilir)
-  // Bu durumda, controller'dan alınan veriyi kullanacağı için burada tanımlamak mantıklı.
+
   Widget buildInfoCard(String label, String value, IconData icon) {
     return Card(
       elevation: 3,

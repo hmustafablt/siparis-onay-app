@@ -15,7 +15,7 @@ class ProfileEditController extends GetxController {
 
   // Reaktif durum değişkenleri
   final RxBool isLoading = false.obs; // Yüklenme durumu
-  final RxString errorMessage = ''.obs; // Hata mesajı
+  final RxString errorMessage = ''.obs;
 
   // Düzenlenecek orijinal kullanıcı verileri (ProfileScreen'dan gelecek)
   Map<String, dynamic>? initialUserData;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart'; // GetX kütüphanesi import edildi
-import '../controllers/profile_edit_controller.dart'; // ProfileEditController'ı import et
+import 'package:get/get.dart';
+import '../controllers/profile_edit_controller.dart';
 
 class ProfileEditScreen extends StatelessWidget {
   const ProfileEditScreen({super.key});

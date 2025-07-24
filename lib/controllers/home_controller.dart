@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:flutter/material.dart'; // Widget'ları import etmemize gerek yok ama bazen ihtiyaç duyulabilir.
+import 'package:flutter/material.dart';
 import 'package:mbtest/screens/profil_screen.dart';
 
 // Ekran importları (Controller'ın doğrudan UI widget'larını bilmesi gerekmez,
@@ -9,11 +9,8 @@ import '../screens/approved_orders_screen.dart';
 import '../screens/canceled_orders_screen.dart';
 
 class HomeController extends GetxController {
-  // Mevcut seçili tab indeksini reaktif olarak tutuyoruz
   final RxInt currentIndex = 0.obs;
 
-  // BottomNavigationBar'da gösterilecek sayfalar listesi
-  // Bu listeyi Controller'da tutmak, View'ın daha temiz kalmasını sağlar.
   final List<Widget> pages = [
     OrderListScreen(), // Bekleyenler
     ApprovedOrdersScreen(), // Onaylananlar
@@ -23,7 +20,7 @@ class HomeController extends GetxController {
 
   // Tab değiştiğinde çağrılacak metod
   void changePage(int index) {
-    currentIndex.value = index; // Reaktif değeri güncelliyoruz
+    currentIndex.value = index;
   }
 
   @override
