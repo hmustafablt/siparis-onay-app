@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:get/get.dart'; // GetX kütüphanesi import edildi
+import 'package:get/get.dart';
 import 'package:mbtest/binding/login_binding.dart';
 import 'package:mbtest/binding/order_detail_binding.dart';
 import 'package:mbtest/binding/order_list_binding.dart';
@@ -9,17 +9,12 @@ import 'package:mbtest/binding/profile_edit_binding.dart';
 import 'package:mbtest/binding/register_binding.dart';
 import 'package:mbtest/screens/profil_screen.dart';
 import 'package:mbtest/screens/profile_edit_screen.dart';
-
 import 'firebase_options.dart';
-
-// Ekran importları
 import 'screens/login_screen.dart';
 import 'screens/home_page.dart';
 import 'screens/register_screen.dart';
 import 'screens/order_detail_screen.dart';
 import 'screens/order_list_screen.dart';
-
-// Servis importu
 import 'services/order_repository.dart';
 
 void main() async {

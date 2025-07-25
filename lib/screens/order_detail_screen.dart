@@ -28,27 +28,22 @@ class OrderDetailScreen extends StatelessWidget {
                   // Sipariş yüklenirken veya bulunamazsa bir yüklenme göstergesi veya hata mesajı
                   return const Center(child: CircularProgressIndicator());
                 }
-                final order = controller
-                    .order
-                    .value!; // Nullable olduğu için ! ile erişim
+                final order =
+                    controller.order.value!; // Null olduğu için ! ile erişim
 
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     _buildTitle('Müşteri'),
-                    _buildValue(
-                      order.customer.value,
-                    ), // Düzeltme: .value eklendi
+                    _buildValue(order.customer.value),
                     const SizedBox(height: 16),
 
                     _buildTitle('Sipariş No'),
-                    _buildValue(order.id), // ID zaten reaktif değil, doğru
+                    _buildValue(order.id),
                     const SizedBox(height: 16),
 
                     _buildTitle('Toplam Tutar'),
-                    _buildValue(
-                      '${order.totalAmount.value} ₺',
-                    ), // Düzeltme: .value eklendi
+                    _buildValue('${order.totalAmount.value} ₺'),
                     const SizedBox(height: 40),
 
                     Row(
@@ -58,7 +53,7 @@ class OrderDetailScreen extends StatelessWidget {
                             onPressed: controller
                                 .approveOrder, // Controller metodunu çağır
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.green, // Material renk
+                              backgroundColor: Colors.green,
                               padding: const EdgeInsets.symmetric(vertical: 14),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8),
@@ -100,14 +95,13 @@ class OrderDetailScreen extends StatelessWidget {
     );
   }
 
-  // Yardımcı widget metotları (UI katmanında kalabilir)
   Widget _buildTitle(String text) {
     return Text(
       text,
       style: const TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.bold,
-        color: Colors.grey, // Material renk
+        color: Colors.grey,
       ),
     );
   }
@@ -117,7 +111,7 @@ class OrderDetailScreen extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
       decoration: BoxDecoration(
-        color: Colors.grey.shade200, // Material renk
+        color: Colors.grey.shade200,
         borderRadius: BorderRadius.circular(10),
       ),
       child: Text(value, style: const TextStyle(fontSize: 18)),

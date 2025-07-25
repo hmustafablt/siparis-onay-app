@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart'; // GetX kütüphanesi import edildi
-import '../controllers/register_controller.dart'; // RegisterController'ı import et
+import 'package:get/get.dart';
+import '../controllers/register_controller.dart';
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({super.key});
@@ -13,7 +13,7 @@ class RegisterScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Kayıt Ol'),
-        backgroundColor: Colors.indigo, // AppBar rengi eklendi
+        backgroundColor: Colors.indigo,
       ),
       body: Padding(
         padding: const EdgeInsets.all(24),
@@ -21,8 +21,7 @@ class RegisterScreen extends StatelessWidget {
           child: Column(
             children: [
               TextField(
-                controller: controller
-                    .firstNameController, // Controller'dan TextEditingController'ı al
+                controller: controller.firstNameController,
                 decoration: const InputDecoration(
                   labelText: 'Ad',
                   border: OutlineInputBorder(),
@@ -30,8 +29,7 @@ class RegisterScreen extends StatelessWidget {
               ),
               const SizedBox(height: 12),
               TextField(
-                controller: controller
-                    .lastNameController, // Controller'dan TextEditingController'ı al
+                controller: controller.lastNameController,
                 decoration: const InputDecoration(
                   labelText: 'Soyad',
                   border: OutlineInputBorder(),
@@ -39,8 +37,7 @@ class RegisterScreen extends StatelessWidget {
               ),
               const SizedBox(height: 12),
               TextField(
-                controller: controller
-                    .titleController, // Controller'dan TextEditingController'ı al
+                controller: controller.titleController,
                 decoration: const InputDecoration(
                   labelText: 'Ünvan',
                   border: OutlineInputBorder(),
@@ -48,8 +45,7 @@ class RegisterScreen extends StatelessWidget {
               ),
               const SizedBox(height: 12),
               TextField(
-                controller: controller
-                    .locationController, // Controller'dan TextEditingController'ı al
+                controller: controller.locationController,
                 decoration: const InputDecoration(
                   labelText: 'Lokasyon',
                   border: OutlineInputBorder(),
@@ -57,8 +53,7 @@ class RegisterScreen extends StatelessWidget {
               ),
               const SizedBox(height: 12),
               TextField(
-                controller: controller
-                    .emailController, // Controller'dan TextEditingController'ı al
+                controller: controller.emailController,
                 decoration: const InputDecoration(
                   labelText: 'E-posta',
                   border: OutlineInputBorder(),
@@ -67,8 +62,7 @@ class RegisterScreen extends StatelessWidget {
               ),
               const SizedBox(height: 12),
               TextField(
-                controller: controller
-                    .passwordController, // Controller'dan TextEditingController'ı al
+                controller: controller.passwordController,
                 obscureText: true,
                 decoration: const InputDecoration(
                   labelText: 'Şifre',
@@ -77,14 +71,12 @@ class RegisterScreen extends StatelessWidget {
               ),
               const SizedBox(height: 24),
               Obx(
-                () =>
-                    controller.errorMessage !=
-                        null // Reaktif hata mesajını dinle
+                () => controller.errorMessage != null
                     ? Text(
                         controller.errorMessage!,
                         style: const TextStyle(color: Colors.red),
                       )
-                    : const SizedBox.shrink(), // Hata yoksa boşluk bırak
+                    : const SizedBox.shrink(),
               ),
               const SizedBox(height: 12),
               SizedBox(
@@ -93,8 +85,7 @@ class RegisterScreen extends StatelessWidget {
                   () => ElevatedButton(
                     onPressed: controller.isLoading
                         ? null
-                        : controller
-                              .register, // Reaktif yüklenme durumunu dinle
+                        : controller.register,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.indigo,
                       padding: const EdgeInsets.symmetric(vertical: 14),
@@ -103,15 +94,10 @@ class RegisterScreen extends StatelessWidget {
                       ),
                     ),
                     child: controller.isLoading
-                        ? const CircularProgressIndicator(
-                            color: Colors.white,
-                          ) // Yüklenme göstergesi rengi
+                        ? const CircularProgressIndicator(color: Colors.white)
                         : const Text(
                             'Kayıt Ol',
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.white,
-                            ), // Metin rengi
+                            style: TextStyle(fontSize: 16, color: Colors.white),
                           ),
                   ),
                 ),

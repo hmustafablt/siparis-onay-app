@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/home_controller.dart';
 
-// Ekran importları (Controller'da da tanımlanabilir ama View'da da kalabilir)
-
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -11,7 +9,6 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     // HomeController'ı bul veya oluştur (ilk kez çağrıldığında oluşturulur)
     // Eğer bu sayfaya bir binding üzerinden geliniyorsa Get.find<HomeController>() da kullanılabilir.
-    // Ancak Get.put genellikle daha yaygın bir başlangıç noktasıdır.
     final HomeController controller = Get.put(HomeController());
 
     return Scaffold(
@@ -20,8 +17,8 @@ class HomePage extends StatelessWidget {
       bottomNavigationBar: Obx(
         () => BottomNavigationBar(
           currentIndex:
-              controller.currentIndex.value, // Controller'dan değeri al
-          onTap: controller.changePage, // Controller'daki metodu çağır
+              controller.currentIndex.value, // Controller'dan değeri alıyoruz.
+          onTap: controller.changePage, // Controller'daki metodu çağırıyoruz.
           selectedItemColor: Colors.indigo,
           unselectedItemColor: Colors.grey,
           items: const [

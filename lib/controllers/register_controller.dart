@@ -2,6 +2,7 @@ import 'package:flutter/material.dart'; // TextEditingController, SnackBar için
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:mbtest/main.dart';
 
 class RegisterController extends GetxController {
   // TextEditingController'lar GetxController içinde yönetilir
@@ -79,6 +80,7 @@ class RegisterController extends GetxController {
       await Future.delayed(const Duration(seconds: 1)); // Gecikme eklendi
 
       // Giriş ekranına geri dön
+      Get.offAllNamed(Routes.LOGIN);
       Get.back();
     } on FirebaseAuthException catch (e) {
       _errorMessage.value = e.message ?? 'Bir hata oluştu.';

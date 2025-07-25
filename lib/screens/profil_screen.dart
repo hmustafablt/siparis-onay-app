@@ -7,21 +7,20 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // ProfileController'ı bul veya oluştur.
     final ProfileController controller = Get.put(ProfileController());
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profil'),
-        backgroundColor: Colors.indigo, // AppBar rengi eklendi
+        backgroundColor: Colors.indigo,
         actions: [
           IconButton(
             icon: const Icon(Icons.logout),
-            onPressed: controller.logout, // Controller metodunu çağır
+            onPressed: controller.logout,
           ),
           IconButton(
             icon: const Icon(Icons.edit),
-            onPressed: controller.goToProfileEdit, // Controller metodunu çağır
+            onPressed: controller.goToProfileEdit,
           ),
         ],
       ),
@@ -30,7 +29,7 @@ class ProfileScreen extends StatelessWidget {
           return const Center(child: CircularProgressIndicator());
         }
 
-        // userData null ise veya boşsa, uygun bir mesaj göster
+        // userData null ise veya boşsa, uygun bir mesaj gösteriyor.
         if (controller.userData.value == null ||
             controller.userData.value!.isEmpty) {
           return const Center(

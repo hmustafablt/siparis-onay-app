@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart'; // GetX kütüphanesi import edildi
-import '../controllers/order_list_controller.dart'; // OrderListController'ı import et
+import 'package:get/get.dart';
+import '../controllers/order_list_controller.dart';
 
 class OrderListScreen extends StatelessWidget {
   const OrderListScreen({super.key});
@@ -12,9 +12,6 @@ class OrderListScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Bekleyen Siparişler"),
-        // AppBar rengi için Color.fromARGB(0, 30, 29, 131) şeffaf bir renk verir.
-        // Genellikle tam opak bir renk tercih edilir.
-        // Örnek: Colors.indigo veya Color(0xFF1E1D83)
         backgroundColor: Colors.indigo,
       ),
       body: Obx(() {
@@ -36,7 +33,7 @@ class OrderListScreen extends StatelessWidget {
               final order = orders[index];
               return controller.buildOrderCard(
                 order,
-              ); // Controller'daki metodu çağır
+              ); // Controller'daki metodu çağırıyoruz
             },
           );
         }

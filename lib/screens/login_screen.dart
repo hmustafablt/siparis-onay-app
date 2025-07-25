@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart'; // GetX kütüphanesi import edildi
-import '../controllers/login_controller.dart'; // LoginController'ı import et
+import 'package:get/get.dart';
+import '../controllers/login_controller.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -31,7 +31,7 @@ class LoginScreen extends StatelessWidget {
               const SizedBox(height: 32),
               TextField(
                 controller: controller
-                    .emailController, // Controller'dan TextEditingController'ı al
+                    .emailController, // Controller'dan TextEditingController'ı alıyoruz.
                 decoration: const InputDecoration(
                   labelText: 'E-posta',
                   border: OutlineInputBorder(),
